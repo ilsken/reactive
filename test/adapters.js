@@ -5,6 +5,10 @@ var Emitter = require('emitter');
 var clone = require('clone');
 var adapter = clone(reactive.adapter);
 
+// swig template adapter
+var swigReg = /\{{ ([^}]+)\ }}/g;
+var swigChar = '{{ ';
+
 // simplified backbone adapter
 
 function subscribe(obj, prop, fn) {
@@ -57,6 +61,8 @@ describe('custom adapter', function() {
     reactive.unsubscribe(unsubscribe);
     reactive.set(set);
     reactive.get(get);
+    reactive.intReg(swigReg);
+    reactive.intChar(swigChar);
   });
 
   // go back to defaults to prevent leaking
@@ -65,11 +71,13 @@ describe('custom adapter', function() {
     reactive.unsubscribe(adapter.unsubscribe);
     reactive.set(adapter.set);
     reactive.get(adapter.get);
+    reactive.intReg(adapter.intReg);
+    reactive.intChar(adapter.intChar);
   });
 
   beforeEach(function() {
-    person = Person({ name: 'Matt' });
-    el = domify('<div><h1 data-text="name"></h1></div>');
+    person = Person({ name: 'Matt', age: 10 });
+    el = domify('<div><h1 data-text="name"></h1><p>{{ age }}</div>');
   });
 
   it('setting obj[prop] should update view', function() {
@@ -90,5 +98,10 @@ describe('custom adapter', function() {
     react.set('name', 'TJ');
     assert('TJ' == el.children[0].textContent);
     assert('TJ' == person.get('name'));
+  });
+
+  it('should have inserted age property into p tag', function() {
+    var react = reactive(el, person);
+    assert('10' == el.children[1].textContent);
   });
 });
