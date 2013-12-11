@@ -6,7 +6,7 @@ var clone = require('clone');
 var adapter = clone(reactive.adapter);
 
 // swig template adapter
-var swigReg = /\{{ ([^}}]+)\ }}/g;
+var swigReg = /\{{([^}}]+)\}}/g;
 var swigTags = ['{{', '}}'];
 
 // simplified backbone adapter
