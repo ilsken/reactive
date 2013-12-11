@@ -112,15 +112,15 @@ reactive.set(function(obj, prop, val) {
 });
 ```
 
-### Interpolation Tags
+### Interpolation
 
 Depending on other template engines you may want to change the tags which enable interpolation.
 
-Following changes interpolation tags from `{name}` to `{{ name }}`:
-
 ```
-reactive.intReg(/\{{ ([^}]+)\ }}/g);
-reactive.intChar('{{');
+// detects {{ foobar }}
+reactive.interpolate('{{', '}}');
+// detects default {foobar}
+reactive.interpolate(/\{([^}]+)\}/g);
 ```
 
 ## Interpolation
