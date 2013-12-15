@@ -5,9 +5,8 @@ var Emitter = require('emitter');
 var clone = require('clone');
 var adapter = clone(reactive.adapter);
 
-// swig template adapter
-var swigReg = /\{{([^}}]+)\}}/g;
-var swigTags = ['{{', '}}'];
+var start = '{';
+var close = '}';
 
 // simplified backbone adapter
 
@@ -61,7 +60,7 @@ describe('custom adapter', function() {
     reactive.unsubscribe(unsubscribe);
     reactive.set(set);
     reactive.get(get);
-    reactive.interpolate(swigTags[0], swigTags[1]);
+    reactive.interpolate(start, close);
   });
 
   // go back to defaults to prevent leaking
