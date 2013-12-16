@@ -5,8 +5,8 @@ var Emitter = require('emitter');
 var clone = require('clone');
 var adapter = clone(reactive.adapter);
 
-var start = '{';
-var close = '}';
+var start = '{{';
+var close = '}}';
 
 // simplified backbone adapter
 
@@ -52,7 +52,7 @@ Person.prototype.get = function(prop) {
 
 // Tests
 
-describe('custom adapter', function() {
+describe('custom delimiters', function() {
   var el, person;
 
   before(function() {
